@@ -38,7 +38,7 @@ app.post("/sign-up", (req, res) => {
 
 app.post("/tweets", (req, res) => {
 
-	const {username, tweet, avatar} = req.body
+	const {username, tweet} = req.body
 
 	const USER = usuario.find(user => user.username === username)
 
