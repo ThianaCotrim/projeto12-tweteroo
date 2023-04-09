@@ -15,9 +15,9 @@ app.use(cors())
 
 app.get("/tweets", (req, res) => {
 
-	
-	
-		res.send(tweets).status(200)
+	const postagens = tweets.slice(-10)
+
+		res.send(postagens).status(200)
 	
 })
 
@@ -25,11 +25,16 @@ app.post("/sign-up", (req, res) => {
 
 	const {username, avatar} = req.body
 
+	if (!username || !avatar){
+		res.send("Todos campos são obrigatórios").status(400)
+		return
+	}
+
 	const novoUsuario = {username, avatar}
 
 	usuario.push(novoUsuario)
 	console.log(req.body)	
-    res.send("OK")
+    res.send("OK").status(201)
 	
   });
 
