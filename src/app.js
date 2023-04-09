@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors"
 
-
 const tweets = []
 const usuario = []
 
@@ -15,10 +14,9 @@ app.use(cors())
 
 app.get("/tweets", (req, res) => {
 
-	const postagens = tweets.slice(-10)
+	const postagens = [...tweets].reverse().slice(0, 10)
 
 		res.send(postagens).status(200)
-	
 })
 
 app.post("/sign-up", (req, res) => {
@@ -40,17 +38,16 @@ app.post("/sign-up", (req, res) => {
 
 app.post("/tweets", (req, res) => {
 
+	const {username, tweet, avatar} = req.body
 
-	const {username, tweet} = req.body
+	const USER = usuario.find(user => user.username === username)
 
-	if(!usuario.find((user) => user.username === username)){
+	if (!USER) {
 		return res.status(401).send("UNAUTHORIZED")
 	}
-
-	const novoTweet = {username, tweet}
-
-	tweets.push(novoTweet)
-	res.send("OK")
+	
+	tweets.push({...USER, tweet})
+	res.send('OK')
 })
 
 app.listen(5000)
